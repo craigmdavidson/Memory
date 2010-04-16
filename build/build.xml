@@ -1,0 +1,47 @@
+<?xml version="1.0" ?>
+<project name="Memory" default="all" basedir=".">
+  <property name="devsource" value="./.." />
+  <property name="libs" value="./../lib" />
+  <property name="builddir" value="../.."/>
+  <property name="target" value="${builddir}/target" />
+  <property name="targetdir" value="${builddir}/targetdir" />
+  <path id="classpath">
+    <pathelement path="${libs}" />
+      <fileset dir="${libs}"><include name="**/*.jar"/></fileset>
+    <pathelement location="${target}/classes" />
+  </path>
+
+  <target name="clean">
+    <delete dir="${compile.outdir}" />
+    <delete dir="${target}" />
+  </target>
+
+  <target name="prepare">
+    <mkdir dir="${target}/classes"/>
+    <mkdir dir="${target}/war"/>
+  </target>
+
+  <target name="build-app" description="Compile the source code">
+    <javac srcdir="${devsource}/src" destdir="${target}/classes">
+      <include name="**/*.java" />
+      <exclude name="*.xml" />
+      <classpath refid="classpath" />
+    </javac>
+  </target>
+
+  <target name="build-war">
+  	<copy todir="${target}/war">
+      <fileset dir = "${devsource}/web"><include name="*"/><include name="**/*"/></fileset>
+    </copy>
+    <copy todir="${target}/war/WEB-INF/lib">
+      <fileset dir="${libs}"><include name="**/*" /></fileset>
+    </copy>
+    <copy todir="${target}/war/WEB-INF/classes">
+      <fileset dir="${target}/classes"><include name="**/*.class" /></fileset>
+    </copy>
+    <jar jarfile="${target}/../${ant.project.name}.war" basedir="${target}/war" />
+  </target>
+
+  <target name="all" depends="clean, prepare, build-app, build-war" />
+
+</project>
