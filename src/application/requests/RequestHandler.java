@@ -21,11 +21,12 @@ public class RequestHandler extends HttpServlet {
 
 	public String gadgetXml(HttpServletRequest req){
 		return 
-	"<Module>" +  
-	  "<ModulePrefs title=\"Memory\" height=\"200\" />"+   
-	  "<Content type=\"url\" href=\"" + showMemoryUrl(req) + "\">" +  
-	  "</Content>" +  
-	"</Module>"; 
+			"<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?>" +
+			"<Module>" +  
+			  "<ModulePrefs title=\"Memory\" height=\"200\" />"+   
+			  "<Content type=\"url\" href=\"" + showMemoryUrl(req) + "\">" +  
+			  "</Content>" +  
+			"</Module>"; 
 	}
 
 	private String showMemoryUrl(HttpServletRequest req) {
